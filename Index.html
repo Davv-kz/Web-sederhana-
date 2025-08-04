@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulir Data Diri</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      padding: 20px;
+    }
+
+    .form-container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    button {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 12px;
+      margin-top: 20px;
+      border-radius: 5px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #2980b9;
+    }
+
+    .hasil {
+      margin-top: 30px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    .hasil h3 {
+      margin-bottom: 10px;
+    }
+
+    img {
+      max-width: 100px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Formulir Data Diri</h2>
+    <form id="formData">
+      <label for="nama">Nama Lengkap:</label>
+      <input type="text" id="nama" name="nama" required>
+
+      <label for="alamat">Alamat:</label>
+      <textarea id="alamat" name="alamat" rows="3" required></textarea>
+
+      <label for="tgl">Tanggal Lahir:</label>
+      <input type="date" id="tgl" name="tanggal_lahir" required>
+
+      <label for="jk">Jenis Kelamin:</label>
+      <select id="jk" name="jenis_kelamin" required>
+        <option value="">-- Pilih --</option>
+        <option value="Laki-laki">Laki-laki</option>
+        <option value="Perempuan">Perempuan</option>
+      </select>
+
+      <label for="foto">Upload Foto:</label>
+      <input type="file" id="foto" name="foto" accept="image/*">
+
+      <button type="submit">Kirim</button>
+    </form>
+  </div>
+
+  <div class="hasil" id="hasilData" style="display: none;">
+    <h3>Data yang Dikirim:</h3>
+    <p><strong>Nama:</strong> <span id="hasilNama"></span></p>
+    <p><strong>Alamat:</strong> <span id="hasilAlamat"></span></p>
+    <p><strong>Tanggal Lahir:</strong> <span id="hasilTgl"></span></p>
+    <p><strong>Jenis Kelamin:</strong> <span id="hasilJK"></span></p>
+    <p><strong>Foto:</strong><br><img id="hasilFoto" src="#" alt="Foto"></p>
+  </div>
+
+  <script>
+    const form = document.getElementById('formData');
+    const hasil = document.getElementById('hasilData');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      document.getElementById('hasilNama').innerText = form.nama.value;
+      document.getElementById('hasilAlamat').innerText = form.alamat.value;
+      document.getElementById('hasilTgl').innerText = form.tanggal_lahir.value;
+      document.getElementById('hasilJK').innerText = form.jenis_kelamin.value;
+
+      const fotoInput = document.getElementById('foto');
+      const hasilFoto = document.getElementById('hasilFoto');
+
+      if (fotoInput.files && fotoInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          hasilFoto.src = e.target.result;
+        };
+        reader.readAsDataURL(fotoInput.files[0]);
+      }
+
+      hasil.style.display = 'block';
+    });
+  </script>
+
+</body>
+</html>
